@@ -9,15 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Academic Calm -->
-    <!-- Application Structure Plan: A single-page dashboard structure with a sticky navigation bar for easy access to key sections: an 'Overview' with performance metrics and citation trends, an interactive/filterable 'Publications' list, a thematic 'Research Focus' section, and lists for 'Co-authors' and 'Skills'. This structure is chosen over a linear report format to allow users (e.g., academic reviewers, potential collaborators) to quickly assess research impact (Overview), dive deep into specific work (Publications), and understand the broader research narrative (Research Focus) in a non-linear, exploratory manner. A language switcher (KO/EN) is added for international accessibility. -->
-    <!-- Visualization & Content Choices: 
-    - Citations: Goal: Change -> Viz: Bar Chart (Chart.js/Canvas) -> Interaction: Hover tooltips -> Justification: Clearly shows research impact growth over time.
-    - Publications: Goal: Organize/Explore -> Viz: Dynamic list of HTML cards -> Interaction: JS-powered buttons for filtering (by Type, Year, Research Theme) and sorting (by Citations, Year), now language-aware -> Justification: Allows users to efficiently navigate a large body of work and find relevant papers without being overwhelmed.
-    - Research Themes: Goal: Inform/Navigate -> Viz: Thematic HTML cards with icons -> Interaction: Clicking a card filters the publication list -> Justification: Provides a high-level summary of research areas and acts as an intuitive navigation/filtering mechanism.
-    - Metrics (h-index, etc.): Goal: Inform -> Viz: Styled HTML "stat cards" -> Interaction: None -> Justification: Presents key performance indicators prominently for quick assessment.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         html { scroll-behavior: smooth; }
         body {
@@ -420,14 +411,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const pubElement = document.createElement('div');
             pubElement.className = 'card p-4';
             const citedByText = langData[currentLang]['publications.citedBy'];
+            // --- MODIFICATION START ---
+            // The citation count color is changed from blue (text-blue-600) to gray (text-slate-600) for a more neutral, academic tone.
             pubElement.innerHTML = `
                 <h5 class="font-bold text-md text-slate-800">${p.title}</h5>
                 <p class="text-sm text-slate-600 mt-1">${p.authors}</p>
                 <div class="flex flex-wrap items-center justify-between mt-2 text-sm">
                     <p class="text-slate-500 italic">${p.journal}, ${p.year}</p>
-                    <p class="font-semibold text-blue-600">${citedByText} ${p.citations}</p>
+                    <p class="font-semibold text-slate-600">${citedByText} ${p.citations}</p>
                 </div>
             `;
+            // --- MODIFICATION END ---
             publicationsList.appendChild(pubElement);
         });
     }
@@ -534,4 +528,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 </body>
-</html></immersive>
+</html>
