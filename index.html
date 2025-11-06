@@ -1,15 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jungmin Cho - Interactive Research Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jungmin Cho - Interactive Research Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<style>
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: #f1f5f9; color: #334155; }
         .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
@@ -25,207 +26,193 @@
     </style>
 </head>
 <body class="bg-slate-100">
-
 <header class="bg-white shadow-sm sticky top-0 z-50">
-    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-            <div class="flex-shrink-0">
-                <h1 class="text-xl font-bold text-slate-800" data-lang-key="header.title">Jungmin Cho's Portfolio</h1>
-            </div>
-            <div class="hidden md:flex items-center">
-                <div class="flex items-baseline space-x-4">
-                    <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.overview">Overview</a>
-                    <a href="#research" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.research">Research Focus</a>
-                    <a href="#publications" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.publications">Publications</a>
-                    <a href="#peer-review" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.peer_review">Peer Review</a>
-                    <a href="#skills" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.skills">Skills</a>
-                </div>
-            </div>
-            <div id="lang-switcher" class="flex items-center space-x-2">
-                <button data-lang="ko" class="lang-btn active" data-lang-key="lang.korean">Korean</button>
-                <button data-lang="en" class="lang-btn" data-lang-key="lang.english">English</button>
-            </div>
-        </div>
-    </nav>
+<nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex-shrink-0">
+<h1 class="text-xl font-bold text-slate-800" data-lang-key="header.title">Jungmin Cho's Portfolio</h1>
+</div>
+<div class="hidden md:flex items-center">
+<div class="flex items-baseline space-x-4">
+<a class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.overview" href="#overview">Overview</a>
+<a class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.research" href="#research">Research Focus</a>
+<a class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.publications" href="#publications">Publications</a>
+<a class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.peer_review" href="#peer-review">Peer Review</a>
+<a class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.skills" href="#skills">Skills</a>
+</div>
+</div>
+<div class="flex items-center space-x-2" id="lang-switcher">
+<button class="lang-btn active" data-lang="ko" data-lang-key="lang.korean">Korean</button>
+<button class="lang-btn" data-lang="en" data-lang-key="lang.english">English</button>
+</div>
+</div>
+</nav>
 </header>
-
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-
-    <section id="profile" class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900" data-lang-key="profile.name"></h2>
-        <p class="mt-2 text-lg text-slate-600" data-lang-key="profile.title"></p>
-        <div class="mt-4 flex justify-center items-center space-x-4 text-sm text-slate-500">
-            <a href="mailto:chominit@kyonggi.ac.kr" class="hover:text-blue-500">📧 chominit@kyonggi.ac.kr</a>
-            <span>•</span>
-            <a href="https://scholar.google.com/citations?user=7CqixwMAAAAJ" target="_blank" class="hover:text-blue-500">Google Scholar</a>
-            <span>•</span>
-            <a href="https://orcid.org/0000-0001-7008-2310" target="_blank" class="hover:text-blue-500">ORCID</a>
-        </div>
-        <div class="mt-6 flex flex-wrap justify-center gap-2">
-            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Photogrammetry</span>
-            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">LiDAR</span>
-            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Indoor Positioning</span>
-            <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Smart Construction</span>
-        </div>
-    </section>
-
-    <section id="overview" class="mb-16 scroll-mt-20">
-        <h3 class="section-title" data-lang-key="overview.title"></h3>
-        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="overview.desc"></p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mb-12">
-            <div class="card p-6">
-                <div class="text-5xl font-bold text-blue-600">110</div>
-                <div class="mt-2 text-slate-500" data-lang-key="overview.citations"></div>
-            </div>
-            <div class="card p-6">
-                <div class="text-5xl font-bold text-blue-600">6</div>
-                <div class="mt-2 text-slate-500">h-index</div>
-            </div>
-            <div class="card p-6">
-                <div class="text-5xl font-bold text-blue-600">6</div>
-                <div class="mt-2 text-slate-500">i10-index</div>
-            </div>
-        </div>
-        <div class="card p-4 sm:p-6">
-            <h4 class="text-lg font-semibold text-slate-800 mb-4 text-center" data-lang-key="overview.chartTitle"></h4>
-            <div class="chart-container">
-                <canvas id="citationsChart"></canvas>
-            </div>
-        </div>
-    </section>
-
-    <section id="research" class="mb-16 scroll-mt-20">
-        <h3 class="section-title" data-lang-key="research.title"></h3>
-        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="research.desc"></p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UAV">
-                <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uav.title"></h4>
-                <p class="text-slate-600 text-sm" data-lang-key="research.uav.desc"></p>
-            </div>
-            <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UWB">
-                <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uwb.title"></h4>
-                <p class="text-slate-600 text-sm" data-lang-key="research.uwb.desc"></p>
-            </div>
-            <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="Micropile">
-                <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.micropile.title"></h4>
-                <p class="text-slate-600 text-sm" data-lang-key="research.micropile.desc"></p>
-            </div>
-        </div>
-    </section>
-
-    <section id="publications" class="mb-16 scroll-mt-20">
-        <h3 class="section-title" data-lang-key="publications.title"></h3>
-        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="publications.desc"></p>
-        <div class="card p-4 sm:p-6">
-            <div class="flex flex-wrap gap-4 mb-6 items-center">
-                <div class="flex-grow">
-                    <span class="font-semibold mr-3" data-lang-key="publications.filterBy"></span>
-                    <div id="type-filters" class="inline-flex rounded-md shadow-sm" role="group">
-                        <button type="button" class="filter-btn active px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100" data-filter="all" data-lang-key="publications.filter.all"></button>
-                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100" data-filter="International Journal" data-lang-key="publications.filter.intl"></button>
-                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100" data-filter="Domestic Journal" data-lang-key="publications.filter.domestic"></button>
-                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100" data-filter="Thesis" data-lang-key="publications.filter.thesis"></button>
-                    </div>
-                </div>
-                <div>
-                    <span class="font-semibold mr-3" data-lang-key="publications.sortBy"></span>
-                    <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option value="year_desc" data-lang-key="publications.sort.year"></option>
-                        <option value="citations_desc" data-lang-key="publications.sort.citations"></option>
-                    </select>
-                </div>
-            </div>
-            <div id="publications-list" class="space-y-4"></div>
-        </div>
-    </section>
-
-    <section id="peer-review" class="mb-16 scroll-mt-20">
-        <h3 class="section-title" data-lang-key="peer_review.title"></h3>
-        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="peer_review.desc"></p>
-        <div class="card p-6">
-            <h4 class="font-bold text-lg text-slate-800 mb-4 text-center" data-lang-key="peer_review.total"></h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 max-w-4xl mx-auto">
-                <div data-lang-key="peer_review.ksce"></div>
-                <div data-lang-key="peer_review.eswa"></div>
-                <div data-lang-key="peer_review.measurement"></div>
-                <div data-lang-key="peer_review.computers"></div>
-                <div data-lang-key="peer_review.gps"></div>
-                <div data-lang-key="peer_review.reports"></div>
-                <div data-lang-key="peer_review.drones"></div>
-                <div data-lang-key="peer_review.sensors"></div>
-                <div data-lang-key="peer_review.water"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="mb-16 scroll-mt-20">
-        <h3 class="section-title" data-lang-key="skills.title"></h3>
-        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="skills.desc"></p>
-        <div class="card p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geo.title"></h4>
-                    <ul class="list-disc list-inside space-y-1 text-slate-600">
-                        <li>RTK-UAV Operation & Mission Planning</li>
-                        <li>Digital Photogrammetry</li>
-                        <li>3D Laser Scanning</li>
-                        <li>Geographic Information Systems (GIS)</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.prog.title"></h4>
-                    <ul class="list-disc list-inside space-y-1 text-slate-600">
-                        <li>Python, MATLAB</li>
-                        <li>Deep Learning (PyTorch, YOLOv8)</li>
-                        <li>Point Cloud Processing (Open3D)</li>
-                        <li>Statistical Data Analysis</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.hw.title"></h4>
-                    <ul class="list-disc list-inside space-y-1 text-slate-600">
-                        <li>Ultra-Wideband (UWB) System Integration</li>
-                        <li>IoT Environmental Sensor Integration</li>
-                        <li>GNSS/GPS Systems</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geotech.title"></h4>
-                    <ul class="list-disc list-inside space-y-1 text-slate-600">
-                        <li>Micropile Field Test Analysis</li>
-                        <li>3D FEM Numerical Analysis (Midas GTS NX)</li>
-                    </ul>
-                </div>
-                <div class="md:col-span-2 lg:col-span-3">
-                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.cert.title"></h4>
-                    <ul class="list-disc list-inside space-y-1 text-slate-600 columns-1 md:columns-2">
-                        <li data-lang-key="skills.cert.civil"></li>
-                        <li data-lang-key="skills.cert.safety"></li>
-                        <li data-lang-key="skills.cert.materials"></li>
-                        <li data-lang-key="skills.cert.geospatial"></li>
-                        <li data-lang-key="skills.cert.history"></li>
-                        <li data-lang-key="skills.cert.drone"></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
+<section class="text-center mb-16" id="profile">
+<h2 class="text-4xl md:text-5xl font-extrabold text-slate-900" data-lang-key="profile.name"></h2>
+<p class="mt-2 text-lg text-slate-600" data-lang-key="profile.title"></p>
+<div class="mt-4 flex justify-center items-center space-x-4 text-sm text-slate-500">
+<a class="hover:text-blue-500" href="mailto:chominit@kyonggi.ac.kr">📧 chominit@kyonggi.ac.kr</a>
+<span>•</span>
+<a class="hover:text-blue-500" href="https://scholar.google.com/citations?user=7CqixwMAAAAJ" target="_blank">Google Scholar</a>
+<span>•</span>
+<a class="hover:text-blue-500" href="https://orcid.org/0000-0001-7008-2310" target="_blank">ORCID</a>
+</div>
+<div class="mt-6 flex flex-wrap justify-center gap-2">
+<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Photogrammetry</span>
+<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">LiDAR</span>
+<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Indoor Positioning</span>
+<span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Smart Construction</span>
+</div>
+</section>
+<section class="mb-16 scroll-mt-20" id="overview">
+<h3 class="section-title" data-lang-key="overview.title"></h3>
+<p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="overview.desc"></p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mb-12">
+<div class="card p-6">
+<div class="text-5xl font-bold text-blue-600" id="total-citations">123</div>
+<div class="mt-2 text-slate-500" data-lang-key="overview.citations"></div>
+</div>
+<div class="card p-6">
+<div class="text-5xl font-bold text-blue-600" id="h-index">7</div>
+<div class="mt-2 text-slate-500">h-index</div>
+</div>
+<div class="card p-6">
+<div class="text-5xl font-bold text-blue-600" id="i10-index">6</div>
+<div class="mt-2 text-slate-500">i10-index</div>
+</div>
+</div>
+<div class="card p-4 sm:p-6">
+<h4 class="text-lg font-semibold text-slate-800 mb-4 text-center" data-lang-key="overview.chartTitle"></h4>
+<div class="chart-container">
+<canvas id="citationsChart"></canvas>
+</div>
+</div>
+</section>
+<section class="mb-16 scroll-mt-20" id="research">
+<h3 class="section-title" data-lang-key="research.title"></h3>
+<p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="research.desc"></p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UAV">
+<h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uav.title"></h4>
+<p class="text-slate-600 text-sm" data-lang-key="research.uav.desc"></p>
+</div>
+<div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UWB">
+<h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uwb.title"></h4>
+<p class="text-slate-600 text-sm" data-lang-key="research.uwb.desc"></p>
+</div>
+<div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="Micropile">
+<h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.micropile.title"></h4>
+<p class="text-slate-600 text-sm" data-lang-key="research.micropile.desc"></p>
+</div>
+</div>
+</section>
+<section class="mb-16 scroll-mt-20" id="publications">
+<h3 class="section-title" data-lang-key="publications.title"></h3>
+<p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="publications.desc"></p>
+<div class="card p-4 sm:p-6">
+<div class="flex flex-wrap gap-4 mb-6 items-center">
+<div class="flex-grow">
+<span class="font-semibold mr-3" data-lang-key="publications.filterBy"></span>
+<div class="inline-flex rounded-md shadow-sm" id="type-filters" role="group">
+<button class="filter-btn active px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100" data-filter="all" data-lang-key="publications.filter.all" type="button"></button>
+<button class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100" data-filter="International Journal" data-lang-key="publications.filter.intl" type="button"></button>
+<button class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100" data-filter="Domestic Journal" data-lang-key="publications.filter.domestic" type="button"></button>
+<button class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100" data-filter="Thesis" data-lang-key="publications.filter.thesis" type="button"></button>
+</div>
+</div>
+<div>
+<span class="font-semibold mr-3" data-lang-key="publications.sortBy"></span>
+<select class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="sort-select">
+<option data-lang-key="publications.sort.year" value="year_desc"></option>
+<option data-lang-key="publications.sort.citations" value="citations_desc"></option>
+</select>
+</div>
+</div>
+<div class="space-y-4" id="publications-list"></div>
+</div>
+</section>
+<section class="mb-16 scroll-mt-20" id="peer-review">
+<h3 class="section-title" data-lang-key="peer_review.title"></h3>
+<p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="peer_review.desc"></p>
+<div class="card p-6">
+<h4 class="font-bold text-lg text-slate-800 mb-4 text-center" data-lang-key="peer_review.total"></h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 max-w-4xl mx-auto">
+<div data-lang-key="peer_review.ksce"></div>
+<div data-lang-key="peer_review.eswa"></div>
+<div data-lang-key="peer_review.measurement"></div>
+<div data-lang-key="peer_review.computers"></div>
+<div data-lang-key="peer_review.gps"></div>
+<div data-lang-key="peer_review.reports"></div>
+<div data-lang-key="peer_review.drones"></div>
+<div data-lang-key="peer_review.sensors"></div>
+<div data-lang-key="peer_review.water"></div>
+</div>
+</div>
+</section>
+<section class="mb-16 scroll-mt-20" id="skills">
+<h3 class="section-title" data-lang-key="skills.title"></h3>
+<p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="skills.desc"></p>
+<div class="card p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div>
+<h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geo.title"></h4>
+<ul class="list-disc list-inside space-y-1 text-slate-600">
+<li>RTK-UAV Operation &amp; Mission Planning</li>
+<li>Digital Photogrammetry</li>
+<li>3D Laser Scanning</li>
+<li>Geographic Information Systems (GIS)</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.prog.title"></h4>
+<ul class="list-disc list-inside space-y-1 text-slate-600">
+<li>Python, MATLAB</li>
+<li>Deep Learning (PyTorch, YOLOv8)</li>
+<li>Point Cloud Processing (Open3D)</li>
+<li>Statistical Data Analysis</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.hw.title"></h4>
+<ul class="list-disc list-inside space-y-1 text-slate-600">
+<li>Ultra-Wideband (UWB) System Integration</li>
+<li>IoT Environmental Sensor Integration</li>
+<li>GNSS/GPS Systems</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geotech.title"></h4>
+<ul class="list-disc list-inside space-y-1 text-slate-600">
+<li>Micropile Field Test Analysis</li>
+<li>3D FEM Numerical Analysis (Midas GTS NX)</li>
+</ul>
+</div>
+<div class="md:col-span-2 lg:col-span-3">
+<h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.cert.title"></h4>
+<ul class="list-disc list-inside space-y-1 text-slate-600 columns-1 md:columns-2">
+<li data-lang-key="skills.cert.civil"></li>
+<li data-lang-key="skills.cert.safety"></li>
+<li data-lang-key="skills.cert.materials"></li>
+<li data-lang-key="skills.cert.geospatial"></li>
+<li data-lang-key="skills.cert.history"></li>
+<li data-lang-key="skills.cert.drone"></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
 </main>
-
 <footer class="bg-white mt-16 border-t">
-    <div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
-        <p data-lang-key="footer.copyright"></p>
-        <p class="mt-1" data-lang-key="footer.desc"></p>
-    </div>
+<div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
+<p data-lang-key="footer.copyright"></p>
+<p class="mt-1" data-lang-key="footer.desc"></p>
+</div>
 </footer>
-
 <script>
 /* peer_base: reviews=35 journals=9 */
 document.addEventListener('DOMContentLoaded', function () {
-    // 고정 식별자
-    const ORCID_ID = '0000-0001-7008-2310';
-
     const langData = {
         ko: {
             "header.title": "조정민의 포트폴리오",
@@ -248,11 +235,11 @@ document.addEventListener('DOMContentLoaded', function () {
             "research.uav.title": "UAV 사진측량 및 인프라 모니터링",
             "research.uav.desc": "RTK-UAV를 활용하여 사면 변위와 같은 토목 인프라를 고정밀도로 모니터링하는 연구입니다. GCP/PPK 기술을 통해 측량 정확도를 최적화하고, 딥러닝(YOLOv8)을 융합하여 포인트 클라우드에서 객체 정보를 자동으로 추출하는 기술을 개발합니다.",
             "research.uwb.title": "UWB/WiFi 기반 실내 측위 시스템",
-            "research.uwb.desc": "건설 현장과 같은 복잡한 실내 환경에서 작업자와 장비의 위치를 정밀하게 추적하는 3D 측위 시스템을 연구합니다. UWB 앵커의 최적 배치 전략과 반복 계산 기반의 고정밀 측위 알고리즘을 개발하여 시스템의 정확도와 안정성을 향상시킵니다.",
+            "research.uwb.desc": "복잡한 실내 환경에서 작업자와 장비의 위치를 정밀하게 추적하는 3D 측위 시스템을 연구합니다.",
             "research.micropile.title": "지반공학 및 마이크로파일 거동 분석",
-            "research.micropile.desc": "마이크로파일의 지지력과 침하 거동을 분석하는 연구입니다. 현장 시험과 3D 유한요소해석(FEM)을 통해 암반에 설치된 마이크로파일의 거동을 분석하고, 상부 지층의 주면 마찰력을 고려한 수정된 지지력 공식을 제안하여 보다 효율적인 설계를 목표로 합니다.",
+            "research.micropile.desc": "마이크로파일의 지지력과 침하 거동을 분석하는 연구입니다.",
             "publications.title": "논문 실적",
-            "publications.desc": "모든 연구 실적을 확인할 수 있는 공간입니다. 논문 종류, 연구 주제, 발표 연도별로 필터링하거나 피인용 횟수 순으로 정렬하여 원하는 논문을 쉽게 찾아볼 수 있습니다. 각 논문 카드는 제목, 저자, 학술지 정보 등 핵심 내용을 요약하여 제공합니다.",
+            "publications.desc": "모든 연구 실적을 확인할 수 있는 공간입니다.",
             "publications.filterBy": "종류별 필터:",
             "publications.filter.all": "전체",
             "publications.filter.intl": "국제 학술지",
@@ -264,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "publications.citedBy": "피인용",
             "publications.noResult": "선택한 필터에 해당하는 논문이 없습니다.",
             "peer_review.title": "논문 심사 활동",
-            "peer_review.desc": "다양한 국제 학술지의 동료 심사(Peer Review) 과정에 참여하며 학술 커뮤니티에 기여하고 있습니다. 이는 해당 연구 분야에 대한 깊이 있는 전문성과 동향 파악 능력을 입증합니다.",
+            "peer_review.desc": "국제 학술지의 동료 심사에 참여하고 있습니다.",
             "peer_review.total": "총 35회 심사 (9개 저널)",
             "peer_review.ksce": "KSCE Journal of Civil Engineering (15회)",
             "peer_review.eswa": "Expert systems with applications (9회)",
@@ -276,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "peer_review.sensors": "Sensors (1회)",
             "peer_review.water": "Water (1회)",
             "skills.title": "보유 기술 및 자격",
-            "skills.desc": "연구 수행에 필요한 핵심 기술 역량과 관련 국가기술자격을 분야별로 정리했습니다. 이는 물리적 세계와 디지털 분석을 잇는 융합적 전문성을 보여줍니다.",
+            "skills.desc": "핵심 기술 역량과 자격.",
             "skills.geo.title": "공간정보 기술",
             "skills.prog.title": "프로그래밍 & 데이터 분석",
             "skills.hw.title": "하드웨어 & 센서 시스템",
@@ -303,20 +290,20 @@ document.addEventListener('DOMContentLoaded', function () {
             "profile.name": "Jungmin Cho",
             "profile.title": "PhD Candidate in Civil Engineering, Kyonggi University",
             "overview.title": "Research Overview",
-            "overview.desc": "This overview section visually summarizes the key research achievements of Jungmin Cho. You can quickly grasp the research impact through key metrics and intuitively understand the growth trend of research performance through the citations per year graph.",
+            "overview.desc": "This overview section visually summarizes key research achievements.",
             "overview.citations": "Total Citations",
             "overview.chartTitle": "Citations per Year",
             "chart.label": "Citations",
             "research.title": "Research Focus",
-            "research.desc": "This section introduces the main research areas, divided into three core themes. Each theme explains the research goals and approaches, helping to provide a deep understanding of the research content through related technologies and representative papers. Users can click on each theme to directly view the list of related publications.",
+            "research.desc": "Main research areas divided into three core themes.",
             "research.uav.title": "UAV Photogrammetry & Infrastructure Monitoring",
-            "research.uav.desc": "This research focuses on high-precision monitoring of civil infrastructure, such as slope displacement, using RTK-UAV. It optimizes survey accuracy through GCP/PPK techniques and develops technology to automatically extract object information from point clouds by integrating deep learning (YOLOv8).",
+            "research.uav.desc": "High-precision monitoring of civil infrastructure using RTK-UAV.",
             "research.uwb.title": "UWB/WiFi-based Indoor Positioning Systems",
-            "research.uwb.desc": "This research develops a 3D positioning system to precisely track the location of workers and equipment in complex indoor environments like construction sites. It enhances system accuracy and stability by developing optimal UWB anchor placement strategies and high-precision positioning algorithms based on iterative calculations.",
+            "research.uwb.desc": "3D positioning system for complex indoor environments.",
             "research.micropile.title": "Geotechnical Engineering & Micropile Behavior Analysis",
-            "research.micropile.desc": "This study analyzes the bearing capacity and settlement behavior of micropiles. Through field tests and 3D Finite Element Method (FEM) analysis, it examines the behavior of micropiles installed in rock layers and proposes a modified bearing capacity formula that considers the skin friction of the upper ground to aim for more efficient design.",
+            "research.micropile.desc": "Bearing capacity and settlement behavior analysis.",
             "publications.title": "Publications",
-            "publications.desc": "This is a space where you can check all research achievements. You can easily find the desired paper by filtering by publication type, research theme, and year, or by sorting by the number of citations. Each publication card summarizes key information such as title, authors, and journal information.",
+            "publications.desc": "Browse all research outputs.",
             "publications.filterBy": "Filter by Type:",
             "publications.filter.all": "All",
             "publications.filter.intl": "Int'l Journal",
@@ -328,8 +315,8 @@ document.addEventListener('DOMContentLoaded', function () {
             "publications.citedBy": "Cited by",
             "publications.noResult": "No publications found for the selected filters.",
             "peer_review.title": "Peer Review Activities",
-            "peer_review.desc": "Contributing to the academic community by participating in the peer review process for various international academic journals. This demonstrates in-depth expertise and an understanding of current trends in the research field.",
-            "peer_review.total": "35 reviews for 9 journals",
+            "peer_review.desc": "Contributing to the academic community by participating in peer review.",
+            ] reviews for 9 journals",
             "peer_review.ksce": "KSCE Journal of Civil Engineering (15 reviews)",
             "peer_review.eswa": "Expert systems with applications (9 reviews)",
             "peer_review.measurement": "Measurement (2 reviews)",
@@ -340,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "peer_review.sensors": "Sensors (1 review)",
             "peer_review.water": "Water (1 review)",
             "skills.title": "Skills & Certifications",
-            "skills.desc": "This section summarizes the core technical competencies and related national technical qualifications required for research, demonstrating a convergent expertise that connects the physical world and digital analysis.",
+            "skills.desc": "Core competencies and national technical qualifications.",
             "skills.geo.title": "Geospatial Technologies",
             "skills.prog.title": "Programming & Data Analysis",
             "skills.hw.title": "Hardware & Sensor Systems",
@@ -433,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function () {
             publicationsList.innerHTML = `<p class="text-center text-slate-500">${langData[currentLang]['publications.noResult']}</p>`;
             return;
         }
-
         sorted.forEach(p => {
             const pubElement = document.createElement('div');
             pubElement.className = 'card p-4';
@@ -455,10 +441,10 @@ document.addEventListener('DOMContentLoaded', function () {
         citationsChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['2021', '2022', '2023', '2024', '2025'],
+                labels: ['2021', '2022', '2023', '2024', '2025'],  // Python이 채움
                 datasets: [{
                     label: langData[lang]['chart.label'],
-                    data: [7, 15, 16, 35, 34],
+                    data: [7, 15, 16, 35, 47],   // Python이 채움
                     backgroundColor: 'rgba(59, 130, 246, 0.5)',
                     borderColor: 'rgba(59, 130, 246, 1)',
                     borderWidth: 1,
@@ -466,8 +452,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
+                responsive: true, maintainAspectRatio: false,
                 scales: { y: { beginAtZero: true, grid: { color: '#e2e8f0' } }, x: { grid: { display: false } } },
                 plugins: { legend: { display: false } }
             }
@@ -487,61 +472,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (el) el.innerHTML = langData[currentLang]['peer_review.total'];
     }
 
-    function parsePeerBase() {
-        // 1) 주석에서
-        const htmlText = document.documentElement.outerHTML;
-        const m = /\/\*\s*peer_base:\s*reviews\s*=\s*(\d+)\s+journals\s*=\s*(\d+)\s*\*\//.exec(htmlText);
-        if (m) return { baseR: parseInt(m[1], 10), baseJ: parseInt(m[2], 10) };
-        // 2) langData에서 파싱
-        const ko = langData.ko['peer_review.total'] || '';
-        const en = langData.en['peer_review.total'] || '';
-        const km = /총\s*(\d+)\s*회.*\(\s*(\d+)\s*개\s*저널\)/.exec(ko);
-        const em = /(\d+)\s*reviews\s*for\s*(\d+)\s*journals/.exec(en);
-        const baseR = km ? parseInt(km[1],10) : (em ? parseInt(em[1],10) : 0);
-        const baseJ = km ? parseInt(km[2],10) : (em ? parseInt(em[2],10) : 0);
-        return { baseR, baseJ };
-    }
-
-    async function fetchOrcidPeerCounts(orcid) {
-        const url = `https://pub.orcid.org/v3.0/${orcid}/peer-reviews`;
-        try {
-            const resp = await fetch(url, { headers: { 'Accept': 'application/json' }, mode: 'cors' });
-            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-            const data = await resp.json();
-            // 구조: { group: [ { "peer-review-summary": [ {...}, ... ] }, ... ] }
-            let total = 0;
-            const journals = new Set();
-            const groups = Array.isArray(data.group) ? data.group : (data.group ? [data.group] : []);
-            for (const g of groups) {
-                let summaries = g['peer-review-summary'] || g['peer-reviews'] || [];
-                if (!Array.isArray(summaries)) summaries = [summaries];
-                for (const s of summaries) {
-                    total += 1;
-                    let org = null;
-                    if (s.organization && s.organization.name) org = s.organization.name;
-                    if (!org && Array.isArray(s['review-group-id']) && s['review-group-id'][0])
-                        org = typeof s['review-group-id'][0] === 'string' ? s['review-group-id'][0] : (s['review-group-id'][0].value || null);
-                    if (!org && s['source-name'] && s['source-name'].value) org = s['source-name'].value;
-                    if (org) journals.add(String(org).trim());
-                }
-            }
-            return { orcidR: total, orcidJ: journals.size };
-        } catch (e) {
-            return { orcidR: 0, orcidJ: 0 };
-        }
-    }
-
-    async function overlayOrcidPlus() {
-        const { baseR, baseJ } = parsePeerBase();
-        const { orcidR, orcidJ } = await fetchOrcidPeerCounts(ORCID_ID);
-        const totalR = Math.max(0, baseR) + Math.max(0, orcidR);
-        const totalJ = Math.max(0, baseJ) + Math.max(0, orcidJ);
-        langData.ko['peer_review.total'] = `총 ${totalR}회 심사 (${totalJ}개 저널)`;
-        langData.en['peer_review.total'] = `${totalR} reviews for ${totalJ} journals`;
-        rerenderPeerTotal();
-    }
-
-    // 이벤트 바인딩
     typeFilters.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
             const prev = typeFilters.querySelector('.active'); if (prev) prev.classList.remove('active');
@@ -568,10 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const prev = langSwitcher.querySelector('.active'); if (prev) prev.classList.remove('active');
                 e.target.classList.add('active');
                 currentLang = selectedLang;
-                applyLang();
-                renderPublications();
-                updateChart(currentLang);
-                rerenderPeerTotal(); // 언어 바뀔 때 한 번 더 반영
+                applyLang(); renderPublications(); updateChart(currentLang); rerenderPeerTotal();
             }
         }
     });
@@ -588,10 +515,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // 초기 렌더
-    applyLang();
-    renderPublications();
-    updateChart(currentLang);
-    overlayOrcidPlus(); // +@ 적용 (ORCID만 동적, Scholar는 정적)
+    applyLang(); renderPublications(); updateChart(currentLang); rerenderPeerTotal();
 });
 </script>
 </body>
