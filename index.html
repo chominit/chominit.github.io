@@ -9,273 +9,222 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Academic Calm -->
-    <!-- Application Structure Plan: A single-page dashboard structure with a sticky navigation bar for easy access to key sections: an 'Overview' with performance metrics and citation trends, an interactive/filterable 'Publications' list, a thematic 'Research Focus' section, and lists for 'Co-authors' and 'Skills'. This structure is chosen over a linear report format to allow users (e.g., academic reviewers, potential collaborators) to quickly assess research impact (Overview), dive deep into specific work (Publications), and understand the broader research narrative (Research Focus) in a non-linear, exploratory manner. A language switcher (KO/EN) is added for international accessibility. -->
-    <!-- Visualization & Content Choices: 
-    - Citations: Goal: Change -> Viz: Bar Chart (Chart.js/Canvas) -> Interaction: Hover tooltips -> Justification: Clearly shows research impact growth over time.
-    - Publications: Goal: Organize/Explore -> Viz: Dynamic list of HTML cards -> Interaction: JS-powered buttons for filtering (by Type, Year, Research Theme) and sorting (by Citations, Year), now language-aware -> Justification: Allows users to efficiently navigate a large body of work and find relevant papers without being overwhelmed.
-    - Research Themes: Goal: Inform/Navigate -> Viz: Thematic HTML cards with icons -> Interaction: Clicking a card filters the publication list -> Justification: Provides a high-level summary of research areas and acts as an intuitive navigation/filtering mechanism.
-    - Metrics (h-index, etc.): Goal: Inform -> Viz: Styled HTML "stat cards" -> Interaction: None -> Justification: Presents key performance indicators prominently for quick assessment.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', 'Noto Sans KR', sans-serif;
-            background-color: #f1f5f9; /* slate-100 */
-            color: #334155; /* slate-700 */
-        }
-        .card {
-            background-color: white;
-            border-radius: 0.75rem; /* 12px */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 40vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
-        .section-title {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: #1e293b; /* slate-800 */
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .nav-link {
-            transition: color 0.2s;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: #3b82f6; /* blue-500 */
-        }
-        .filter-btn, .lang-btn {
-            transition: all 0.2s;
-        }
-        .filter-btn.active, .lang-btn.active {
-            background-color: #3b82f6;
-            color: white;
-            border-color: #3b82f6;
-        }
-        .lang-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            border: 1px solid transparent;
-        }
-        .lang-btn:not(.active) {
-            background-color: #e2e8f0; /* slate-200 */
-            color: #475569; /* slate-600 */
-        }
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: #f1f5f9; color: #334155; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 300px; max-height: 40vh; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .section-title { font-size: 1.875rem; font-weight: 700; color: #1e293b; margin-bottom: 1.5rem; text-align: center; }
+        .nav-link { transition: color 0.2s; }
+        .nav-link:hover, .nav-link.active { color: #3b82f6; }
+        .filter-btn, .lang-btn { transition: all 0.2s; }
+        .filter-btn.active, .lang-btn.active { background-color: #3b82f6; color: white; border-color: #3b82f6; }
+        .lang-btn { padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; border: 1px solid transparent; }
+        .lang-btn:not(.active) { background-color: #e2e8f0; color: #475569; }
     </style>
 </head>
 <body class="bg-slate-100">
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-slate-800" data-lang-key="header.title">Jungmin Cho's Portfolio</h1>
-                </div>
-                <div class="hidden md:flex items-center">
-                    <div class="flex items-baseline space-x-4">
-                        <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.overview">Overview</a>
-                        <a href="#research" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.research">Research Focus</a>
-                        <a href="#publications" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.publications">Publications</a>
-                        <a href="#peer-review" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.peer_review">Peer Review</a>
-                        <a href="#skills" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.skills">Skills</a>
-                    </div>
-                </div>
-                 <div id="lang-switcher" class="flex items-center space-x-2">
-                    <button data-lang="ko" class="lang-btn active" data-lang-key="lang.korean">Korean</button>
-                    <button data-lang="en" class="lang-btn" data-lang-key="lang.english">English</button>
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex-shrink-0">
+                <h1 class="text-xl font-bold text-slate-800" data-lang-key="header.title">Jungmin Cho's Portfolio</h1>
+            </div>
+            <div class="hidden md:flex items-center">
+                <div class="flex items-baseline space-x-4">
+                    <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.overview">Overview</a>
+                    <a href="#research" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.research">Research Focus</a>
+                    <a href="#publications" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.publications">Publications</a>
+                    <a href="#peer-review" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.peer_review">Peer Review</a>
+                    <a href="#skills" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600" data-lang-key="nav.skills">Skills</a>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        
-        <section id="profile" class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900" data-lang-key="profile.name"></h2>
-            <p class="mt-2 text-lg text-slate-600" data-lang-key="profile.title"></p>
-            <div class="mt-4 flex justify-center items-center space-x-4 text-sm text-slate-500">
-                <a href="mailto:chominit@kyonggi.ac.kr" class="hover:text-blue-500">📧 chominit@kyonggi.ac.kr</a>
-                <span>•</span>
-                <a href="https://scholar.google.com/citations?user=7CqixwMAAAAJ" target="_blank" class="hover:text-blue-500">Google Scholar</a>
-                <span>•</span>
-                <a href="https://orcid.org/0000-0001-7008-2310" target="_blank" class="hover:text-blue-500">ORCID</a>
+            <div id="lang-switcher" class="flex items-center space-x-2">
+                <button data-lang="ko" class="lang-btn active" data-lang-key="lang.korean">Korean</button>
+                <button data-lang="en" class="lang-btn" data-lang-key="lang.english">English</button>
             </div>
-            <div class="mt-6 flex flex-wrap justify-center gap-2">
-                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Photogrammetry</span>
-                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">LiDAR</span>
-                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Indoor Positioning</span>
-                <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Smart Construction</span>
-            </div>
-        </section>
-
-        <section id="overview" class="mb-16 scroll-mt-20">
-            <h3 class="section-title" data-lang-key="overview.title"></h3>
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="overview.desc"></p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mb-12">
-                <div class="card p-6">
-                    <div class="text-5xl font-bold text-blue-600">110</div>
-                    <div class="mt-2 text-slate-500" data-lang-key="overview.citations"></div>
-                </div>
-                <div class="card p-6">
-                    <div class="text-5xl font-bold text-blue-600">6</div>
-                    <div class="mt-2 text-slate-500">h-index</div>
-                </div>
-                <div class="card p-6">
-                    <div class="text-5xl font-bold text-blue-600">6</div>
-                    <div class="mt-2 text-slate-500">i10-index</div>
-                </div>
-            </div>
-            <div class="card p-4 sm:p-6">
-                <h4 class="text-lg font-semibold text-slate-800 mb-4 text-center" data-lang-key="overview.chartTitle"></h4>
-                <div class="chart-container">
-                    <canvas id="citationsChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section id="research" class="mb-16 scroll-mt-20">
-            <h3 class="section-title" data-lang-key="research.title"></h3>
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="research.desc"></p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UAV">
-                    <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uav.title"></h4>
-                    <p class="text-slate-600 text-sm" data-lang-key="research.uav.desc"></p>
-                </div>
-                <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UWB">
-                    <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uwb.title"></h4>
-                    <p class="text-slate-600 text-sm" data-lang-key="research.uwb.desc"></p>
-                </div>
-                <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="Micropile">
-                    <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.micropile.title"></h4>
-                    <p class="text-slate-600 text-sm" data-lang-key="research.micropile.desc"></p>
-                </div>
-            </div>
-        </section>
-
-        <section id="publications" class="mb-16 scroll-mt-20">
-            <h3 class="section-title" data-lang-key="publications.title"></h3>
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="publications.desc"></p>
-            <div class="card p-4 sm:p-6">
-                <div class="flex flex-wrap gap-4 mb-6 items-center">
-                    <div class="flex-grow">
-                        <span class="font-semibold mr-3" data-lang-key="publications.filterBy"></span>
-                        <div id="type-filters" class="inline-flex rounded-md shadow-sm" role="group">
-                            <button type="button" class="filter-btn active px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100" data-filter="all" data-lang-key="publications.filter.all"></button>
-                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100" data-filter="International Journal" data-lang-key="publications.filter.intl"></button>
-                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100" data-filter="Domestic Journal" data-lang-key="publications.filter.domestic"></button>
-                            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100" data-filter="Thesis" data-lang-key="publications.filter.thesis"></button>
-                        </div>
-                    </div>
-                    <div>
-                        <span class="font-semibold mr-3" data-lang-key="publications.sortBy"></span>
-                        <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option value="year_desc" data-lang-key="publications.sort.year"></option>
-                            <option value="citations_desc" data-lang-key="publications.sort.citations"></option>
-                        </select>
-                    </div>
-                </div>
-                <div id="publications-list" class="space-y-4"></div>
-            </div>
-        </section>
-
-        <section id="peer-review" class="mb-16 scroll-mt-20">
-            <h3 class="section-title" data-lang-key="peer_review.title"></h3>
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="peer_review.desc"></p>
-            <div class="card p-6">
-                <h4 class="font-bold text-lg text-slate-800 mb-4 text-center" data-lang-key="peer_review.total"></h4>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 max-w-4xl mx-auto">
-                    <div data-lang-key="peer_review.ksce"></div>
-                    <div data-lang-key="peer_review.eswa"></div>
-                    <div data-lang-key="peer_review.measurement"></div>
-                    <div data-lang-key="peer_review.computers"></div>
-                    <div data-lang-key="peer_review.gps"></div>
-                    <div data-lang-key="peer_review.reports"></div>
-                    <div data-lang-key="peer_review.drones"></div>
-                    <div data-lang-key="peer_review.sensors"></div>
-                    <div data-lang-key="peer_review.water"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="mb-16 scroll-mt-20">
-            <h3 class="section-title" data-lang-key="skills.title"></h3>
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="skills.desc"></p>
-            <div class="card p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div>
-                        <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geo.title"></h4>
-                        <ul class="list-disc list-inside space-y-1 text-slate-600">
-                            <li>RTK-UAV Operation & Mission Planning</li>
-                            <li>Digital Photogrammetry</li>
-                            <li>3D Laser Scanning</li>
-                            <li>Geographic Information Systems (GIS)</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.prog.title"></h4>
-                        <ul class="list-disc list-inside space-y-1 text-slate-600">
-                            <li>Python, MATLAB</li>
-                            <li>Deep Learning (PyTorch, YOLOv8)</li>
-                            <li>Point Cloud Processing (Open3D)</li>
-                            <li>Statistical Data Analysis</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.hw.title"></h4>
-                        <ul class="list-disc list-inside space-y-1 text-slate-600">
-                            <li>Ultra-Wideband (UWB) System Integration</li>
-                            <li>IoT Environmental Sensor Integration</li>
-                            <li>GNSS/GPS Systems</li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geotech.title"></h4>
-                        <ul class="list-disc list-inside space-y-1 text-slate-600">
-                            <li>Micropile Field Test Analysis</li>
-                            <li>3D FEM Numerical Analysis (Midas GTS NX)</li>
-                        </ul>
-                    </div>
-                    <div class="md:col-span-2 lg:col-span-3">
-                        <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.cert.title"></h4>
-                        <ul class="list-disc list-inside space-y-1 text-slate-600 columns-1 md:columns-2">
-                            <li data-lang-key="skills.cert.civil"></li>
-                            <li data-lang-key="skills.cert.safety"></li>
-                            <li data-lang-key="skills.cert.materials"></li>
-                            <li data-lang-key="skills.cert.geospatial"></li>
-                            <li data-lang-key="skills.cert.history"></li>
-                            <li data-lang-key="skills.cert.drone"></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-white mt-16 border-t">
-        <div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
-            <p data-lang-key="footer.copyright"></p>
-            <p class="mt-1" data-lang-key="footer.desc"></p>
         </div>
-    </footer>
+    </nav>
+</header>
+
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+    <section id="profile" class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900" data-lang-key="profile.name"></h2>
+        <p class="mt-2 text-lg text-slate-600" data-lang-key="profile.title"></p>
+        <div class="mt-4 flex justify-center items-center space-x-4 text-sm text-slate-500">
+            <a href="mailto:chominit@kyonggi.ac.kr" class="hover:text-blue-500">📧 chominit@kyonggi.ac.kr</a>
+            <span>•</span>
+            <a href="https://scholar.google.com/citations?user=7CqixwMAAAAJ" target="_blank" class="hover:text-blue-500">Google Scholar</a>
+            <span>•</span>
+            <a href="https://orcid.org/0000-0001-7008-2310" target="_blank" class="hover:text-blue-500">ORCID</a>
+        </div>
+        <div class="mt-6 flex flex-wrap justify-center gap-2">
+            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Photogrammetry</span>
+            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">LiDAR</span>
+            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Indoor Positioning</span>
+            <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Smart Construction</span>
+        </div>
+    </section>
+
+    <section id="overview" class="mb-16 scroll-mt-20">
+        <h3 class="section-title" data-lang-key="overview.title"></h3>
+        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="overview.desc"></p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mb-12">
+            <div class="card p-6">
+                <div class="text-5xl font-bold text-blue-600">110</div>
+                <div class="mt-2 text-slate-500" data-lang-key="overview.citations"></div>
+            </div>
+            <div class="card p-6">
+                <div class="text-5xl font-bold text-blue-600">6</div>
+                <div class="mt-2 text-slate-500">h-index</div>
+            </div>
+            <div class="card p-6">
+                <div class="text-5xl font-bold text-blue-600">6</div>
+                <div class="mt-2 text-slate-500">i10-index</div>
+            </div>
+        </div>
+        <div class="card p-4 sm:p-6">
+            <h4 class="text-lg font-semibold text-slate-800 mb-4 text-center" data-lang-key="overview.chartTitle"></h4>
+            <div class="chart-container">
+                <canvas id="citationsChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="mb-16 scroll-mt-20">
+        <h3 class="section-title" data-lang-key="research.title"></h3>
+        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="research.desc"></p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UAV">
+                <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uav.title"></h4>
+                <p class="text-slate-600 text-sm" data-lang-key="research.uav.desc"></p>
+            </div>
+            <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="UWB">
+                <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uwb.title"></h4>
+                <p class="text-slate-600 text-sm" data-lang-key="research.uwb.desc"></p>
+            </div>
+            <div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="Micropile">
+                <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.micropile.title"></h4>
+                <p class="text-slate-600 text-sm" data-lang-key="research.micropile.desc"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="publications" class="mb-16 scroll-mt-20">
+        <h3 class="section-title" data-lang-key="publications.title"></h3>
+        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="publications.desc"></p>
+        <div class="card p-4 sm:p-6">
+            <div class="flex flex-wrap gap-4 mb-6 items-center">
+                <div class="flex-grow">
+                    <span class="font-semibold mr-3" data-lang-key="publications.filterBy"></span>
+                    <div id="type-filters" class="inline-flex rounded-md shadow-sm" role="group">
+                        <button type="button" class="filter-btn active px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100" data-filter="all" data-lang-key="publications.filter.all"></button>
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100" data-filter="International Journal" data-lang-key="publications.filter.intl"></button>
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100" data-filter="Domestic Journal" data-lang-key="publications.filter.domestic"></button>
+                        <button type="button" class="filter-btn px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100" data-filter="Thesis" data-lang-key="publications.filter.thesis"></button>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-semibold mr-3" data-lang-key="publications.sortBy"></span>
+                    <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="year_desc" data-lang-key="publications.sort.year"></option>
+                        <option value="citations_desc" data-lang-key="publications.sort.citations"></option>
+                    </select>
+                </div>
+            </div>
+            <div id="publications-list" class="space-y-4"></div>
+        </div>
+    </section>
+
+    <section id="peer-review" class="mb-16 scroll-mt-20">
+        <h3 class="section-title" data-lang-key="peer_review.title"></h3>
+        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="peer_review.desc"></p>
+        <div class="card p-6">
+            <h4 class="font-bold text-lg text-slate-800 mb-4 text-center" data-lang-key="peer_review.total"></h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 max-w-4xl mx-auto">
+                <div data-lang-key="peer_review.ksce"></div>
+                <div data-lang-key="peer_review.eswa"></div>
+                <div data-lang-key="peer_review.measurement"></div>
+                <div data-lang-key="peer_review.computers"></div>
+                <div data-lang-key="peer_review.gps"></div>
+                <div data-lang-key="peer_review.reports"></div>
+                <div data-lang-key="peer_review.drones"></div>
+                <div data-lang-key="peer_review.sensors"></div>
+                <div data-lang-key="peer_review.water"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="mb-16 scroll-mt-20">
+        <h3 class="section-title" data-lang-key="skills.title"></h3>
+        <p class="text-center max-w-3xl mx-auto text-slate-600 mb-10" data-lang-key="skills.desc"></p>
+        <div class="card p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geo.title"></h4>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600">
+                        <li>RTK-UAV Operation & Mission Planning</li>
+                        <li>Digital Photogrammetry</li>
+                        <li>3D Laser Scanning</li>
+                        <li>Geographic Information Systems (GIS)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.prog.title"></h4>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600">
+                        <li>Python, MATLAB</li>
+                        <li>Deep Learning (PyTorch, YOLOv8)</li>
+                        <li>Point Cloud Processing (Open3D)</li>
+                        <li>Statistical Data Analysis</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.hw.title"></h4>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600">
+                        <li>Ultra-Wideband (UWB) System Integration</li>
+                        <li>IoT Environmental Sensor Integration</li>
+                        <li>GNSS/GPS Systems</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.geotech.title"></h4>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600">
+                        <li>Micropile Field Test Analysis</li>
+                        <li>3D FEM Numerical Analysis (Midas GTS NX)</li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2 lg:col-span-3">
+                    <h4 class="font-bold text-lg text-slate-800 mb-3" data-lang-key="skills.cert.title"></h4>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600 columns-1 md:columns-2">
+                        <li data-lang-key="skills.cert.civil"></li>
+                        <li data-lang-key="skills.cert.safety"></li>
+                        <li data-lang-key="skills.cert.materials"></li>
+                        <li data-lang-key="skills.cert.geospatial"></li>
+                        <li data-lang-key="skills.cert.history"></li>
+                        <li data-lang-key="skills.cert.drone"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-white mt-16 border-t">
+    <div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
+        <p data-lang-key="footer.copyright"></p>
+        <p class="mt-1" data-lang-key="footer.desc"></p>
+    </div>
+</footer>
 
 <script>
+/* peer_base: reviews=35 journals=9 */
 document.addEventListener('DOMContentLoaded', function () {
+    // 고정 식별자
+    const ORCID_ID = '0000-0001-7008-2310';
 
     const langData = {
         ko: {
@@ -446,7 +395,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { title: 'Implementation of Integrated Smart Construction Monitoring System Based on Point Cloud Data and IoT Technique', authors: 'JY Kim, S Kang, J Cho, S Jeong, S Kim, Y Sung, B Lee, GH Kim', journal: 'Sensors', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV', 'UWB'] },
         ]
     };
-    
+
     let currentLang = 'ko';
     let currentFilters = { type: 'all', tag: 'all' };
     let citationsChart = null;
@@ -469,15 +418,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const sorted = filtered.sort((a, b) => {
             if (sortBy === 'year_desc') {
-                if (b.year !== a.year) {
-                    return b.year - a.year;
-                }
+                if (b.year !== a.year) return b.year - a.year;
                 return b.citations - a.citations;
             }
             if (sortBy === 'citations_desc') {
-                if (b.citations !== a.citations) {
-                    return b.citations - a.citations;
-                }
+                if (b.citations !== a.citations) return b.citations - a.citations;
                 return b.year - a.year;
             }
             return 0;
@@ -488,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function () {
             publicationsList.innerHTML = `<p class="text-center text-slate-500">${langData[currentLang]['publications.noResult']}</p>`;
             return;
         }
-        
+
         sorted.forEach(p => {
             const pubElement = document.createElement('div');
             pubElement.className = 'card p-4';
@@ -499,16 +444,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="flex flex-wrap items-center justify-between mt-2 text-sm">
                     <p class="text-slate-500 italic">${p.journal}, ${p.year}</p>
                     <p class="font-semibold text-blue-600">${citedByText} ${p.citations}</p>
-                </div>
-            `;
+                </div>`;
             publicationsList.appendChild(pubElement);
         });
     }
 
     function updateChart(lang) {
-        if (citationsChart) {
-            citationsChart.destroy();
-        }
+        if (citationsChart) citationsChart.destroy();
         const ctx = document.getElementById('citationsChart').getContext('2d');
         citationsChart = new Chart(ctx, {
             type: 'bar',
@@ -520,43 +462,89 @@ document.addEventListener('DOMContentLoaded', function () {
                     backgroundColor: 'rgba(59, 130, 246, 0.5)',
                     borderColor: 'rgba(59, 130, 246, 1)',
                     borderWidth: 1,
-                    borderRadius: 5,
+                    borderRadius: 5
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: { y: { beginAtZero: true, grid: { color: '#e2e8f0' } }, x: { grid: { display: false } } },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        titleFont: { size: 14 },
-                        bodyFont: { size: 12 },
-                        padding: 10,
-                        cornerRadius: 4,
-                    }
-                }
+                plugins: { legend: { display: false } }
             }
         });
     }
 
-    function updateLanguage(lang) {
-        currentLang = lang;
-        document.documentElement.lang = lang;
+    function applyLang() {
+        document.documentElement.lang = currentLang;
         document.querySelectorAll('[data-lang-key]').forEach(el => {
             const key = el.dataset.langKey;
-            if (langData[lang][key]) {
-                el.innerHTML = langData[lang][key];
-            }
+            if (langData[currentLang][key]) el.innerHTML = langData[currentLang][key];
         });
-        renderPublications();
-        updateChart(lang);
     }
 
+    function rerenderPeerTotal() {
+        const el = document.querySelector('[data-lang-key="peer_review.total"]');
+        if (el) el.innerHTML = langData[currentLang]['peer_review.total'];
+    }
+
+    function parsePeerBase() {
+        // 1) 주석에서
+        const htmlText = document.documentElement.outerHTML;
+        const m = /\/\*\s*peer_base:\s*reviews\s*=\s*(\d+)\s+journals\s*=\s*(\d+)\s*\*\//.exec(htmlText);
+        if (m) return { baseR: parseInt(m[1], 10), baseJ: parseInt(m[2], 10) };
+        // 2) langData에서 파싱
+        const ko = langData.ko['peer_review.total'] || '';
+        const en = langData.en['peer_review.total'] || '';
+        const km = /총\s*(\d+)\s*회.*\(\s*(\d+)\s*개\s*저널\)/.exec(ko);
+        const em = /(\d+)\s*reviews\s*for\s*(\d+)\s*journals/.exec(en);
+        const baseR = km ? parseInt(km[1],10) : (em ? parseInt(em[1],10) : 0);
+        const baseJ = km ? parseInt(km[2],10) : (em ? parseInt(em[2],10) : 0);
+        return { baseR, baseJ };
+    }
+
+    async function fetchOrcidPeerCounts(orcid) {
+        const url = `https://pub.orcid.org/v3.0/${orcid}/peer-reviews`;
+        try {
+            const resp = await fetch(url, { headers: { 'Accept': 'application/json' }, mode: 'cors' });
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const data = await resp.json();
+            // 구조: { group: [ { "peer-review-summary": [ {...}, ... ] }, ... ] }
+            let total = 0;
+            const journals = new Set();
+            const groups = Array.isArray(data.group) ? data.group : (data.group ? [data.group] : []);
+            for (const g of groups) {
+                let summaries = g['peer-review-summary'] || g['peer-reviews'] || [];
+                if (!Array.isArray(summaries)) summaries = [summaries];
+                for (const s of summaries) {
+                    total += 1;
+                    let org = null;
+                    if (s.organization && s.organization.name) org = s.organization.name;
+                    if (!org && Array.isArray(s['review-group-id']) && s['review-group-id'][0])
+                        org = typeof s['review-group-id'][0] === 'string' ? s['review-group-id'][0] : (s['review-group-id'][0].value || null);
+                    if (!org && s['source-name'] && s['source-name'].value) org = s['source-name'].value;
+                    if (org) journals.add(String(org).trim());
+                }
+            }
+            return { orcidR: total, orcidJ: journals.size };
+        } catch (e) {
+            return { orcidR: 0, orcidJ: 0 };
+        }
+    }
+
+    async function overlayOrcidPlus() {
+        const { baseR, baseJ } = parsePeerBase();
+        const { orcidR, orcidJ } = await fetchOrcidPeerCounts(ORCID_ID);
+        const totalR = Math.max(0, baseR) + Math.max(0, orcidR);
+        const totalJ = Math.max(0, baseJ) + Math.max(0, orcidJ);
+        langData.ko['peer_review.total'] = `총 ${totalR}회 심사 (${totalJ}개 저널)`;
+        langData.en['peer_review.total'] = `${totalR} reviews for ${totalJ} journals`;
+        rerenderPeerTotal();
+    }
+
+    // 이벤트 바인딩
     typeFilters.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
-            typeFilters.querySelector('.active').classList.remove('active');
+            const prev = typeFilters.querySelector('.active'); if (prev) prev.classList.remove('active');
             e.target.classList.add('active');
             currentFilters.type = e.target.dataset.filter;
             renderPublications();
@@ -577,34 +565,34 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.tagName === 'BUTTON') {
             const selectedLang = e.target.dataset.lang;
             if (selectedLang !== currentLang) {
-                langSwitcher.querySelector('.active').classList.remove('active');
+                const prev = langSwitcher.querySelector('.active'); if (prev) prev.classList.remove('active');
                 e.target.classList.add('active');
-                updateLanguage(selectedLang);
+                currentLang = selectedLang;
+                applyLang();
+                renderPublications();
+                updateChart(currentLang);
+                rerenderPeerTotal(); // 언어 바뀔 때 한 번 더 반영
             }
         }
     });
 
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
-    
     window.addEventListener('scroll', () => {
         let current = '';
-        sections.forEach(section => {
-            if (pageYOffset >= section.offsetTop - 80) {
-                current = section.getAttribute('id');
-            }
-        });
-
+        sections.forEach(section => { if (pageYOffset >= section.offsetTop - 80) current = section.getAttribute('id'); });
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href').substring(1) === current) {
-                link.classList.add('active');
-            }
+            if (link.getAttribute('href').substring(1) === current) link.classList.add('active');
         });
     });
 
-    updateLanguage('ko');
+    // 초기 렌더
+    applyLang();
+    renderPublications();
+    updateChart(currentLang);
+    overlayOrcidPlus(); // +@ 적용 (ORCID만 동적, Scholar는 정적)
 });
 </script>
 </body>
-</ht
+</html>
