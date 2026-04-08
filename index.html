@@ -103,9 +103,9 @@
 <h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.uwb.title"></h4>
 <p class="text-slate-600 text-sm" data-lang-key="research.uwb.desc"></p>
 </div>
-<div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="Micropile">
-<h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.micropile.title"></h4>
-<p class="text-slate-600 text-sm" data-lang-key="research.micropile.desc"></p>
+<div class="research-card card p-6 hover:shadow-lg transition-shadow cursor-pointer" data-tag="ROS">
+<h4 class="text-xl font-bold text-slate-800 mb-2" data-lang-key="research.ros.title"></h4>
+<p class="text-slate-600 text-sm" data-lang-key="research.ros.desc"></p>
 </div>
 </div>
 </section>
@@ -233,12 +233,12 @@ document.addEventListener('DOMContentLoaded', function () {
             "chart.label": "피인용",
             "research.title": "주요 연구 분야",
             "research.desc": "주요 연구 분야를 세 가지 핵심 주제로 나누어 소개합니다. 각 주제는 연구의 목표와 접근 방식을 설명하며, 관련 기술과 대표 논문을 통해 연구 내용에 대한 깊이 있는 이해를 돕습니다. 사용자는 각 주제를 클릭하여 관련된 논문 목록을 바로 확인할 수 있습니다.",
-            "research.uav.title": "UAV 사진측량 및 인프라 모니터링",
-            "research.uav.desc": "RTK-UAV를 활용하여 사면 변위와 같은 토목 인프라를 고정밀도로 모니터링하는 연구입니다. GCP/PPK 기술을 통해 측량 정확도를 최적화하고, 딥러닝(YOLOv8)을 융합하여 포인트 클라우드에서 객체 정보를 자동으로 추출하는 기술을 개발합니다.",
+            "research.uav.title": "UAV & 딥러닝 정밀 측량",
+            "research.uav.desc": "RTK-UAV 사진측량과 YOLOv8 딥러닝을 융합하여 사면·인프라 변위 모니터링 및 포인트 클라우드 기반 객체 탐지 기술을 개발합니다. GCP/PPK 최적 배치 연구로 3D 매핑 정확도를 향상시킵니다.",
             "research.uwb.title": "UWB/WiFi 기반 실내 측위 시스템",
             "research.uwb.desc": "복잡한 실내 환경에서 작업자와 장비의 위치를 정밀하게 추적하는 3D 측위 시스템을 연구합니다.",
-            "research.micropile.title": "지반공학 및 마이크로파일 거동 분석",
-            "research.micropile.desc": "마이크로파일의 지지력과 침하 거동을 분석하는 연구입니다.",
+            "research.ros.title": "ROS 기반 스마트 건설 모니터링",
+            "research.ros.desc": "ROS·IoT 센서·포인트 클라우드를 통합한 실시간 스마트 건설현장 모니터링 시스템을 개발하며, LiDAR 경량화 및 선형 객체 추출 알고리즘을 연구합니다.",
             "publications.title": "논문 실적",
             "publications.desc": "모든 연구 실적을 확인할 수 있는 공간입니다.",
             "publications.filterBy": "종류별 필터:",
@@ -297,12 +297,12 @@ document.addEventListener('DOMContentLoaded', function () {
             "chart.label": "Citations",
             "research.title": "Research Focus",
             "research.desc": "Main research areas divided into three core themes.",
-            "research.uav.title": "UAV Photogrammetry & Infrastructure Monitoring",
-            "research.uav.desc": "High-precision monitoring of civil infrastructure using RTK-UAV.",
+            "research.uav.title": "UAV & Deep Learning Photogrammetry",
+            "research.uav.desc": "Integrating RTK-UAV photogrammetry with YOLOv8 deep learning for slope monitoring, point cloud object detection, and optimal GCP placement for high-precision 3D mapping.",
             "research.uwb.title": "UWB/WiFi-based Indoor Positioning Systems",
             "research.uwb.desc": "3D positioning system for complex indoor environments.",
-            "research.micropile.title": "Geotechnical Engineering & Micropile Behavior Analysis",
-            "research.micropile.desc": "Bearing capacity and settlement behavior analysis.",
+            "research.ros.title": "ROS-based Smart Construction Monitoring",
+            "research.ros.desc": "Developing real-time smart construction monitoring systems integrating ROS, IoT sensors, and point cloud data. Research includes LiDAR lightweighting and linear object extraction algorithms.",
             "publications.title": "Publications",
             "publications.desc": "Browse all research outputs.",
             "publications.filterBy": "Filter by Type:",
@@ -347,40 +347,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const publicationsData = {
         ko: [
-            { title: 'UAV 사진측량의 사면 변위 측정 적용', authors: '조정민, 이종석, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2022, citations: 23, type: 'International Journal', tags: ['UAV'] },
-            { title: 'RTK-UAV 사진측량에서 RTK 신호 단절에 대처하기 위한 GCP 및 PPK 활용 방안', authors: '조정민, 이병길', journal: 'Drones', year: 2023, citations: 19, type: 'International Journal', tags: ['UAV'] },
+            { title: 'UAV 사진측량의 사면 변위 측정 적용', authors: '조정민, 이종석, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2022, citations: 25, type: 'International Journal', tags: ['UAV'] },
+            { title: 'RTK-UAV 사진측량에서 RTK 신호 단절에 대처하기 위한 GCP 및 PPK 활용 방안', authors: '조정민, 이병길', journal: 'Drones', year: 2023, citations: 23, type: 'International Journal', tags: ['UAV'] },
             { title: '3차원 제작 및 정사사진 생성을 위한 UAV의 최적 촬영 조건에 관한 연구', authors: '조정민, 이종석, 이병길', journal: '한국측량학회지', year: 2020, citations: 16, type: 'International Journal', tags: ['UAV'] },
-            { title: '소규모 현장에서의 UWB 적용을 위한 앵커 배치 및 3D 측위 알고리즘 연구', authors: '조정민, 정승진, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 14, type: 'International Journal', tags: ['UWB'] },
-            { title: '경사 및 수직 영상을 이용한 UAV 사진측량 정확도 평가 연구', authors: '조정민, 이종석, 이병길', journal: '한국측량학회지', year: 2021, citations: 12, type: 'International Journal', tags: ['UAV'] },
-            { title: '초광대역 기반 실내 측위 정확도 향상을 위한 4개 앵커의 최적 배치 (JIF 91%)', authors: '조정민, 이병길', journal: 'Expert Systems with Applications', year: 2024, citations: 10, type: 'International Journal', tags: ['UWB'] },
+            { title: '소규모 현장에서의 UWB 적용을 위한 앵커 배치 및 3D 측위 알고리즘 연구', authors: '조정민, 정승진, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 26, type: 'International Journal', tags: ['UWB'] },
+            { title: '경사 및 수직 영상을 이용한 UAV 사진측량 정확도 평가 연구', authors: '조정민, 이종석, 이병길', journal: '한국측량학회지', year: 2021, citations: 13, type: 'International Journal', tags: ['UAV'] },
+            { title: '초광대역 기반 실내 측위 정확도 향상을 위한 4개 앵커의 최적 배치 (JIF 91%)', authors: '조정민, 이병길', journal: 'Expert Systems with Applications', year: 2024, citations: 17, type: 'International Journal', tags: ['UWB'] },
             { title: '2.4 GHz WiFi를 이용한 3D 실내 측위의 한계', authors: '정승진, 조정민, 이병길', journal: '한국측량학회지', year: 2024, citations: 6, type: 'International Journal', tags: ['UWB'] },
-            { title: '현장 시험을 통한 암반층에 설치된 마이크로파일의 침하량 산정 방법', authors: '황태현, 조정민, 이영생', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 5, type: 'International Journal', tags: ['Micropile'] },
-            { title: '건설 현장에서의 UWB를 활용한 실시간 실내 측위 및 안전 어플리케이션', authors: '조정민, 정승진, 김주용, 김광희, 이종석, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2025, citations: 3, type: 'International Journal', tags: ['UWB'] },
+            { title: '현장 시험을 통한 암반층에 설치된 마이크로파일의 침하량 산정 방법', authors: '황태현, 조정민, 이영생', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 8, type: 'International Journal', tags: ['ROS'] },
+            { title: '건설 현장에서의 UWB를 활용한 실시간 실내 측위 및 안전 어플리케이션', authors: '조정민, 정승진, 김주용, 김광희, 이종석, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2025, citations: 9, type: 'International Journal', tags: ['UWB'] },
             { title: '네트워크 RTK UAV를 이용한 사면의 변위 계측에 관한 연구', authors: '조정민, 이종석, 양재우, 이병길', journal: '한국방재학회 논문집', year: 2021, citations: 1, type: 'Domestic Journal', tags: ['UAV'] },
             { title: '정정: 소규모 현장에서의 UWB 적용을 위한 앵커 배치 및 3D 측위 알고리즘 연구', authors: '조정민, 정승진, 이병길', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 1, type: 'International Journal', tags: ['UWB'] },
-            { title: '고정밀 3D 매핑을 위한 UAV 사진측량의 최적 지상기준점 배치 (JIF 90%)', authors: '조정민, 정승진, 이병길', journal: 'Measurement', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
-            { title: '상부 지반의 주면 마찰력을 고려한 마이크로파일의 수정 지지력 공식 제안', authors: '조정민', journal: '경기대학교 (석사학위논문)', year: 2023, citations: 0, type: 'Thesis', tags: ['Micropile'] },
+            { title: '고정밀 3D 매핑을 위한 UAV 사진측량의 최적 지상기준점 배치 (JIF 90%)', authors: '조정민, 정승진, 이병길', journal: 'Measurement', year: 2026, citations: 4, type: 'International Journal', tags: ['UAV'] },
+            { title: '상부 지반의 주면 마찰력을 고려한 마이크로파일의 수정 지지력 공식 제안', authors: '조정민', journal: '경기대학교 (석사학위논문)', year: 2023, citations: 0, type: 'Thesis', tags: ['ROS'] },
             { title: 'YOLOv8s Seg 모델과 RTK UAV 사진측량을 이용한 객체 정보 탐지 포인트 클라우드 생성', authors: '조정민, 정승진, 이종석, 김태훈, 문유미, 이병길', journal: '한국측량학회지', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
             { title: '실내측위를 위한 거리 측정에 적합한 다중주파수 WiFi 밴드 조합 제안', authors: '정승진, 조정민, 이병길', journal: '한국측량학회지', year: 2025, citations: 0, type: 'International Journal', tags: ['UWB'] },
-            { title: '포인트 클라우드 데이터와 IoT 기술 기반의 통합 스마트 건설 모니터링 시스템 구현', authors: '김주용, 강수현, 조정민, 정승진, 김상희, 성영제, 이병길, 김광희', journal: 'Sensors', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV', 'UWB'] },
+            { title: '포인트 클라우드 데이터와 IoT 기술 기반의 통합 스마트 건설 모니터링 시스템 구현', authors: '김주용, 강수현, 조정민, 정승진, 김상희, 성영제, 이병길, 김광희', journal: 'Sensors', year: 2025, citations: 6, type: 'International Journal', tags: ['ROS', 'UAV'] },
+            { title: 'UAV 이미지 기반 딥러닝 모델을 활용한 포트홀 검출 연구', authors: '조정민, 이병길', journal: '한국측량학회지', year: 2023, citations: 0, type: 'Domestic Journal', tags: ['UAV'] },
+            { title: 'RTK 신호가 단절된 UAV의 항공삼각측량 정확도 평가 연구', authors: '조정민, 이병길', journal: '한국측량학회지', year: 2022, citations: 0, type: 'Domestic Journal', tags: ['UAV'] },
+            { title: 'Lightweighting Point Clouds for Linear Object Extraction', authors: 'J Cho, B Lee', journal: 'Under Review', year: 2026, citations: 0, type: 'International Journal', tags: ['ROS'] },
         ],
         en: [
-            { title: 'Application of UAV Photogrammetry to Slope-Displacement Measurement', authors: 'J Cho, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2022, citations: 23, type: 'International Journal', tags: ['UAV'] },
-            { title: 'GCP and PPK utilization plan to deal with RTK signal interruption in RTK-UAV photogrammetry', authors: 'J Cho, B Lee', journal: 'Drones', year: 2023, citations: 19, type: 'International Journal', tags: ['UAV'] },
-            { title: 'A study on the optimal shooting conditions of UAV for 3D production and orthophoto generation', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and…', year: 2020, citations: 16, type: 'International Journal', tags: ['UAV'] },
-            { title: 'A Study on Anchor Placement and 3D Positioning Algorithm for UWB Application in Small Sites', authors: 'J Cho, S Jeong, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 14, type: 'International Journal', tags: ['UWB'] },
-            { title: 'A study on the accuracy evaluation of UAV photogrammetry using oblique and vertical images', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and…', year: 2021, citations: 12, type: 'International Journal', tags: ['UAV'] },
-            { title: 'Optimal layout of four anchors to improve accuracy of Ultra-Wide band based indoor positioning (JIF 91%)', authors: 'J Cho, B Lee', journal: 'Expert Systems with Applications', year: 2024, citations: 10, type: 'International Journal', tags: ['UWB'] },
-            { title: 'Limitations of 3D Indoor Positioning Using 2.4 GHz WiFi', authors: 'SJ Jeong, J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and…', year: 2024, citations: 6, type: 'International Journal', tags: ['UWB'] },
-            { title: 'Calculation method for settlement of micropile installed in rock layers through field tests', authors: 'TH Hwang, J Cho, L YS', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 5, type: 'International Journal', tags: ['Micropile'] },
-            { title: 'Real-time indoor localization and safety applications using UWB in construction', authors: 'J Cho, S Jeong, JY Kim, GH Kim, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2025, citations: 3, type: 'International Journal', tags: ['UWB'] },
+            { title: 'Application of UAV Photogrammetry to Slope-Displacement Measurement', authors: 'J Cho, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2022, citations: 25, type: 'International Journal', tags: ['UAV'] },
+            { title: 'GCP and PPK utilization plan to deal with RTK signal interruption in RTK-UAV photogrammetry', authors: 'J Cho, B Lee', journal: 'Drones', year: 2023, citations: 23, type: 'International Journal', tags: ['UAV'] },
+            { title: 'A study on the optimal shooting conditions of UAV for 3D production and orthophoto generation', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2020, citations: 16, type: 'International Journal', tags: ['UAV'] },
+            { title: 'A Study on Anchor Placement and 3D Positioning Algorithm for UWB Application in Small Sites', authors: 'J Cho, S Jeong, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 26, type: 'International Journal', tags: ['UWB'] },
+            { title: 'A study on the accuracy evaluation of UAV photogrammetry using oblique and vertical images', authors: 'J Cho, J Lee, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2021, citations: 13, type: 'International Journal', tags: ['UAV'] },
+            { title: 'Optimal layout of four anchors to improve accuracy of Ultra-Wide band based indoor positioning (JIF 91%)', authors: 'J Cho, B Lee', journal: 'Expert Systems with Applications', year: 2024, citations: 17, type: 'International Journal', tags: ['UWB'] },
+            { title: 'Limitations of 3D Indoor Positioning Using 2.4 GHz WiFi', authors: 'SJ Jeong, J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2024, citations: 6, type: 'International Journal', tags: ['UWB'] },
+            { title: 'Calculation method for settlement of micropile installed in rock layers through field tests', authors: 'TH Hwang, J Cho, L YS', journal: 'GEOMECHANICS AND ENGINEERING', year: 2022, citations: 8, type: 'International Journal', tags: ['ROS'] },
+            { title: 'Real-time indoor localization and safety applications using UWB in construction', authors: 'J Cho, S Jeong, JY Kim, GH Kim, J Lee, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2025, citations: 9, type: 'International Journal', tags: ['UWB'] },
             { title: 'A Study on the Displacement Measurement of the Slope using Network RTK UAV', authors: 'J Cho, J Lee, J Yang, B Lee', journal: 'Journal of the Korean Society of Hazard Mitigation', year: 2021, citations: 1, type: 'Domestic Journal', tags: ['UAV'] },
             { title: 'Erratum to: A Study on Anchor Placement and 3D Positioning Algorithm for UWB Application in Small Sites', authors: 'J Cho, S Jeong, B Lee', journal: 'KSCE Journal of Civil Engineering', year: 2024, citations: 1, type: 'International Journal', tags: ['UWB'] },
-            { title: 'Optimal ground control point layout for UAV photogrammetry in high precision 3D mapping (JIF 90%)', authors: 'J Cho, S Jeong, B Lee', journal: 'Measurement', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
-            { title: 'Proposal of the modified bearing capacity formula of micropile considering the skin friction of the upper ground', authors: 'J Cho', journal: 'Kyonggi University (Master Thesis)', year: 2023, citations: 0, type: 'Thesis', tags: ['Micropile'] },
+            { title: 'Optimal ground control point layout for UAV photogrammetry in high precision 3D mapping (JIF 90%)', authors: 'J Cho, S Jeong, B Lee', journal: 'Measurement', year: 2026, citations: 4, type: 'International Journal', tags: ['UAV'] },
+            { title: 'Proposal of the modified bearing capacity formula of micropile considering the skin friction of the upper ground', authors: 'J Cho', journal: 'Kyonggi University (Master Thesis)', year: 2023, citations: 0, type: 'Thesis', tags: ['ROS'] },
             { title: 'Generate point clouds with detected object information using YOLOv8s Seg model and RTK UAV photogrammetry', authors: 'J Cho, S Jeong, J Lee, T Kim, Y Moon, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV'] },
             { title: 'Suggest a combination of multi-frequency WiFi bands for ranging indoor positioning', authors: 'S Jeong, J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2025, citations: 0, type: 'International Journal', tags: ['UWB'] },
-            { title: 'Implementation of Integrated Smart Construction Monitoring System Based on Point Cloud Data and IoT Technique', authors: 'JY Kim, S Kang, J Cho, S Jeong, S Kim, Y Sung, B Lee, GH Kim', journal: 'Sensors', year: 2025, citations: 0, type: 'International Journal', tags: ['UAV', 'UWB'] },
+            { title: 'Implementation of Integrated Smart Construction Monitoring System Based on Point Cloud Data and IoT Technique', authors: 'JY Kim, S Kang, J Cho, S Jeong, S Kim, Y Sung, B Lee, GH Kim', journal: 'Sensors', year: 2025, citations: 6, type: 'International Journal', tags: ['ROS', 'UAV'] },
+            { title: 'Pothole Detection Research Using Pre-trained Deep Learning Models Based on UAV Images', authors: 'J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2023, citations: 0, type: 'Domestic Journal', tags: ['UAV'] },
+            { title: 'Accuracy Evaluation of Aerial Triangulation of UAV with RTK Signal Interruption', authors: 'J Cho, B Lee', journal: 'Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography', year: 2022, citations: 0, type: 'Domestic Journal', tags: ['UAV'] },
+            { title: 'Lightweighting Point Clouds for Linear Object Extraction', authors: 'J Cho, B Lee', journal: 'Under Review', year: 2026, citations: 0, type: 'International Journal', tags: ['ROS'] },
         ]
     };
 
