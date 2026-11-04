@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a121f">
+<meta name="description" content="Arduino UNO R4 WiFi BLE 크레인 제어 대시보드">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>CRANE R4 · BLE CONTROL</title>
+<style>
+:root{color-scheme:dark;--bg:#080f19;--panel:#111e2d;--line:#25364a;--ink:#eef7ff;--muted:#96acbf;--lime:#b9f26d;--blue:#65c7ec;--red:#ff7577}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#213955 0%,var(--bg) 52%);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;min-height:100vh;user-select:none;-webkit-tap-highlight-color:transparent}
+main{max-width:520px;margin:auto;padding:22px 18px calc(38px + env(safe-area-inset-bottom))}header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px}.logo{font-size:13px;letter-spacing:.16em;font-weight:900;color:var(--lime)}.sub{font-size:12px;color:var(--muted);margin-top:4px}.tag{font-size:11px;letter-spacing:.03em;border:1px solid #2a4759;background:#102733;padding:7px 10px;border-radius:999px;color:#a8e6d9}
+h1{font-size:29px;letter-spacing:-.04em;line-height:1.24;margin:17px 0 6px}p.lead{color:var(--muted);font-size:13px;line-height:1.65;margin:0 0 22px}
+.panel{border:1px solid var(--line);background:linear-gradient(140deg,#152539,#0f1a29);border-radius:20px;padding:19px;margin-bottom:15px;box-shadow:0 12px 30px #00000021}.panel-title{font-size:13px;font-weight:750;color:#c3d7e9;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.small{color:var(--muted);font-size:12px;line-height:1.65}
+.status{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;margin:0 0 14px}.dot{width:10px;height:10px;border-radius:50%;background:#64788d;box-shadow:0 0 0 5px #61758925}.dot.online{background:var(--lime);box-shadow:0 0 0 5px #b9f26d25}.dot.error{background:var(--red)}
+button{font:inherit;cursor:pointer;touch-action:manipulation}.btn{width:100%;border:1px solid #405e70;border-radius:14px;background:#233d52;color:#fff;padding:14px 16px;font-weight:750;transition:background .1s,transform .1s}.btn:active{transform:scale(.985)}.btn.primary{background:var(--lime);color:#172517;border:0}.btn.subtle{background:#192b3d;font-size:12px;padding:10px;color:#d3e9fa}.btn:disabled{opacity:.5;cursor:not-allowed}.row{display:flex;gap:10px}.row .btn{flex:1}.command-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0}.drive{border-radius:17px;min-height:118px;color:#fff;border:1px solid #38566d;background:linear-gradient(145deg,#25465e,#162c40);display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;touch-action:none;-webkit-user-select:none;font-size:14px;font-weight:750}.drive strong{font-size:26px}.drive.active{background:#b9f26d;color:#12221d;border-color:#b9f26d}.stop{width:100%;border:1px solid #a74956;background:#40212c;color:#ffb5b7;border-radius:15px;padding:17px;font-size:17px;font-weight:850}.stop:active{background:#8b2d3e;color:#fff}
+.speed{display:flex;align-items:baseline;justify-content:space-between;margin-top:9px}.speed span{font-size:12px;color:var(--muted)}.speed strong{font-size:28px;font-variant-numeric:tabular-nums;color:var(--lime)}input[type=range]{width:100%;accent-color:var(--lime);margin:22px 0 9px;cursor:pointer}.scale{display:flex;justify-content:space-between;color:#748a9c;font-size:11px}.readout{border-radius:11px;background:#0b1724;border:1px solid #1f3547;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#b9f26d;font-size:12px;padding:12px;min-height:42px;overflow-wrap:anywhere}.log{height:140px;overflow:auto;color:#b3c9da;font-family:ui-monospace,Consolas,monospace;font-size:11px;line-height:1.7;white-space:pre-wrap}.warning{color:#ebc895;border:1px solid #785b32;background:#43321b3d;border-radius:13px;padding:12px;font-size:12px;line-height:1.7;margin-top:12px}.footer{text-align:center;font-size:11px;color:#6e879a;margin:20px 0}.mode{font-size:11px;color:#a6d7f1}.mode b{color:#b9f26d}#simButton{margin-top:10px}#instructions{display:none}#instructions.show{display:block}a{color:#b0dfff}
+</style>
+</head>
+<body>
+<main>
+<header><div><div class="logo">CRANE / R4</div><div class="sub">UNO R4 WiFi · Bluetooth Low Energy</div></div><div class="tag">BLE DIRECT · NO Wi-Fi</div></header>
+<h1>크레인 제어 대시보드</h1>
+<p class="lead">스마트폰과 아두이노를 블루투스로 직접 연결합니다. 아두이노 Wi-Fi 접속은 필요하지 않습니다.</p>
+<section class="panel">
+<div class="panel-title"><span>01 · 연결 상태</span><span id="deviceName" class="mode">장치 미연결</span></div>
+<div class="status"><span id="statusDot" class="dot"></span><span id="statusText">블루투스 연결 대기</span></div>
+<div class="row"><button id="connectBtn" class="btn primary">ᛒ 블루투스 연결</button><button id="disconnectBtn" class="btn subtle" style="flex:0 0 29%" disabled>연결 해제</button></div>
+<button id="simButton" class="btn subtle">화면 시뮬레이션 켜기 (실제 전송 없음)</button>
+<p class="small" id="help">휴대전화의 Bluetooth를 켠 뒤, Chrome(Android) 또는 Bluefy(iPhone)에서 연결 버튼을 눌러 주세요.</p>
+</section>
+<section class="panel">
+<div class="panel-title"><span>02 · 속도 설정</span><span class="mode">PWM 명령값 · 실제 RPM 아님</span></div>
+<div class="speed"><span>설정 속도</span><strong><output id="speedValue">120</output><span> / 255</span></strong></div>
+<input id="speed" type="range" min="0" max="255" step="5" value="120" aria-label="속도 설정">
+<div class="scale"><span>0 정지</span><span>128 중간</span><span>255 최대</span></div>
+</section>
+<section class="panel">
+<div class="panel-title"><span>03 · 방향 제어</span><span class="mode" id="controlMode">연결 필요</span></div>
+<p class="small">버튼을 누르고 있는 동안만 명령을 반복 전송합니다. 손을 떼면 정지 명령을 보냅니다.</p>
+<div class="command-grid"><button class="drive" id="forward" aria-label="정회전 버튼 길게 누르기"><strong>↑</strong>정회전 · 누르기</button><button class="drive" id="backward" aria-label="역회전 버튼 길게 누르기"><strong>↓</strong>역회전 · 누르기</button></div>
+<button id="stop" class="stop">■ 정지 / STOP</button>
+<div class="warning">현재 제공되는 아두이노 코드는 <b>모터 출력 비활성화(시뮬레이션)</b> 상태입니다. 실제 하중을 움직이기 전 모터 드라이버의 단자, 전원, 리미트 스위치, 물리적 비상정지 장치를 반드시 검증해야 합니다.</div>
+</section>
+<section class="panel"><div class="panel-title">04 · 아두이노 응답</div><div class="readout" id="readout">READY · 연결을 기다리는 중</div><div class="panel-title" style="margin:18px 0 8px">통신 로그 <button id="clearLog" class="btn subtle" style="width:auto;padding:6px 10px">비우기</button></div><div id="log" class="log" aria-live="polite">접속 준비 완료
+</div></section>
+<section class="panel"><div class="panel-title">사용 안내 <button class="btn subtle" id="toggleHelp" style="width:auto;padding:6px 10px">펼치기</button></div><div id="instructions" class="small">① Arduino IDE에서 동봉된 <code>Crane_R4_BLE.ino</code>를 UNO R4 WiFi에 업로드합니다.<br>② Android Chrome 또는 iPhone Bluefy에서 HTTPS 주소로 접속합니다.<br>③ '블루투스 연결' → <code>CRANE-R4-BLE</code> 선택 → 연결합니다.<br>④ 속도를 설정하고 정회전·역회전 버튼을 길게 누릅니다.<br>⑤ 최초 온라인 접속 후 브라우저 캐시가 저장되면 오프라인 페이지 열기를 시도할 수 있습니다. 브라우저의 캐시 정책에 따라 달라집니다.<br>블루투스 연결 자체는 Wi-Fi나 인터넷을 사용하지 않습니다.</div></section>
+<div class="footer">CRANE R4 BLE CONTROLLER · LOCAL DIRECT GATT · SIMULATION BUILD</div>
+</main>
+<script>
+'use strict';
+const SERVICE='68eb07da-0efe-4a68-9dfe-50fcf106d76c';
+const COMMAND='6a1589db-6ea4-4ec8-99fe-7d5c45795a03';
+const STATUS='1dc2ce16-c545-44b6-b741-99fe5b5625ba';
+const $=id=>document.getElementById(id);
+let device=null, characteristic=null, notifyChar=null, demo=false, active='', holdTimer=null, busy=false, stopNeeded=false;
+const decoder=new TextDecoder(), encoder=new TextEncoder();
+const connected=()=>!!(device&&device.gatt&&device.gatt.connected&&characteristic);
+const usable=()=>connected()||demo;
+function log(t){const time=new Date().toLocaleTimeString('ko-KR',{hour12:false});$('log').textContent+='['+time+'] '+t+'\n';$('log').scrollTop=$('log').scrollHeight;}
+function status(msg,type=''){ $('statusText').textContent=msg;$('statusDot').className='dot'+(type?' '+type:'');$('deviceName').textContent=demo?'시뮬레이션':connected()?'CRANE-R4-BLE':'장치 미연결';$('controlMode').textContent=demo?'화면 시뮬레이션':connected()?'BLE 실제 연결':'연결 필요';$('connectBtn').textContent=connected()?'연결됨 ✓':'ᛒ 블루투스 연결';$('connectBtn').disabled=connected();$('disconnectBtn').disabled=!connected();}
+function updateMotionUI(){ $('forward').classList.toggle('active',active==='F'); $('backward').classList.toggle('active',active==='B'); }
+async function send(msg){if(demo){$('readout').textContent='[SIMULATED] '+msg;log('SIM → '+msg);return true;}if(!connected()){log('BLE 미연결: 명령 전송 안 됨');return false;}
+if(busy){ if(msg==='S')stopNeeded=true;return false; }
+busy=true;let ok=false;
+try{const data=encoder.encode(msg);if(characteristic.writeValueWithResponse)await characteristic.writeValueWithResponse(data);else await characteristic.writeValue(data);log('TX → '+msg);ok=true;}
+catch(e){log('전송 오류: '+e.message);status('BLE 통신 오류','error');}
+finally{busy=false;if(stopNeeded){stopNeeded=false;if(msg!=='S')send('S');}}
+return ok;}
+function release(){if(holdTimer){clearInterval(holdTimer);holdTimer=null;}if(active){active='';updateMotionUI();send('S');}}
+function start(dir,event){event.preventDefault();if(!usable()){log('먼저 BLE를 연결하세요');return;}if(active&&active!==dir)release();active=dir;updateMotionUI();const msg=()=>dir+','+Number($('speed').value);send(msg());if(holdTimer)clearInterval(holdTimer);holdTimer=setInterval(()=>{if(active===dir)send(msg());},300);}
+for(const [id,dir] of [['forward','F'],['backward','B']]){const el=$(id);el.addEventListener('pointerdown',e=>{try{el.setPointerCapture(e.pointerId)}catch{}start(dir,e)});el.addEventListener('pointerup',release);el.addEventListener('pointercancel',release);el.addEventListener('lostpointercapture',release);el.addEventListener('contextmenu',e=>e.preventDefault());}
+window.addEventListener('pointerup',release);window.addEventListener('blur',release);window.addEventListener('pagehide',release);document.addEventListener('visibilitychange',()=>{if(document.hidden)release()});
+$('stop').addEventListener('click',()=>{const had=!!active;release();if(!had)send('S');$('readout').textContent='STOP 명령 전송';});
+$('speed').addEventListener('input',()=>{$('speedValue').textContent=$('speed').value; if(active){const d=active;send(d+','+Number($('speed').value));}});
+function onDisconnect(){characteristic=null;notifyChar=null;release();status('연결 끊김 · 자동 정지','error');log('BLE 연결이 끊겼습니다. 아두이노는 타임아웃 시 자동 정지합니다.');}
+$('connectBtn').addEventListener('click',async()=>{release();if(!window.isSecureContext){log('HTTPS 보안 연결에서만 블루투스를 사용할 수 있습니다.');status('HTTPS 주소로 열어 주세요','error');return;}if(!navigator.bluetooth){status('이 브라우저는 Web Bluetooth 미지원','error');log('Android Chrome 또는 iPhone Bluefy 브라우저를 사용하세요.');return;}try{status('장치 검색 중');device=await navigator.bluetooth.requestDevice({filters:[{namePrefix:'CRANE-R4'}],optionalServices:[SERVICE]});device.addEventListener('gattserverdisconnected',onDisconnect);const server=await device.gatt.connect();const service=await server.getPrimaryService(SERVICE);characteristic=await service.getCharacteristic(COMMAND);notifyChar=await service.getCharacteristic(STATUS);notifyChar.addEventListener('characteristicvaluechanged',e=>{const msg=decoder.decode(e.target.value);$('readout').textContent=msg;log('RX ← '+msg)});await notifyChar.startNotifications();try{$('readout').textContent=decoder.decode(await notifyChar.readValue());}catch{}demo=false;status('블루투스 연결 완료','online');log('CRANE-R4-BLE 연결 성공');await send('PING');}catch(e){characteristic=null;status('연결 실패','error');log('연결 실패: '+e.message);}});
+$('disconnectBtn').addEventListener('click',async()=>{release();await send('S');if(device&&device.gatt&&device.gatt.connected)device.gatt.disconnect();});
+$('simButton').addEventListener('click',()=>{release();demo=!demo;$('simButton').textContent=demo?'시뮬레이션 종료':'화면 시뮬레이션 켜기 (실제 전송 없음)';status(demo?'화면 시뮬레이션 · 모터 미작동':connected()?'블루투스 연결 완료':'블루투스 연결 대기',demo||connected()?'online':'');log(demo?'SIM MODE START — 실제 BLE 전송 없음':'SIM MODE END');});
+$('clearLog').addEventListener('click',()=>{$('log').textContent='';});$('toggleHelp').addEventListener('click',()=>{$('instructions').classList.toggle('show');$('toggleHelp').textContent=$('instructions').classList.contains('show')?'접기':'펼치기'});
+if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('./sw.js').catch(e=>log('오프라인 캐시 등록 실패: '+e.message));}
+if(!window.isSecureContext){$('help').textContent='BLE 연결은 HTTPS 보안 주소에서만 가능합니다. 이 파일을 HTTPS 웹호스팅에 게시해 접속하세요.';}else if(!navigator.bluetooth){$('help').textContent='이 브라우저는 Web Bluetooth를 지원하지 않습니다. Android Chrome 또는 iPhone Bluefy로 열어 주세요.';}
+</script>
+</body>
+</html>
